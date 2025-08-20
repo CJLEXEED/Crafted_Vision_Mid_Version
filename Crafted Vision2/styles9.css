@@ -1,0 +1,186 @@
+/* General reset and body styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: url('geometry\ bg.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ensure the background image covers the screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container Styling */
+.container {
+    background-color: #fff;
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styling */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #4CAF50;
+}
+
+/* Back Button Styling */
+.back-btn {
+    position: absolute;  /* Position it absolutely */
+    top: 20px;           /* Distance from the top of the page */
+    left: 20px;          /* Distance from the left edge */
+    background-color: #f1f1f1;  /* Light background color */
+    color: #0dc453;      /* Text color */
+    font-size: 18px;
+    padding: 10px 15px;
+    border: 2px solid #06d6a2;  /* Blue border */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    z-index: 10;         /* Ensure the button is above other elements */
+}
+
+/* Hover State for Back Button */
+.back-btn:hover {
+    background-color: #007BFF;  /* Change background to blue when hovered */
+    color: #ffffff;             /* Change text color to white */
+    border-color: #0056b3;      /* Darken the border color when hovering */
+}
+
+/* Payment Container Styling */
+.payment-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* Order Summary Section */
+.order-summary {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1s ease-in-out;
+}
+
+/* Order Summary Animation */
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Order Summary Header */
+.order-summary h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Order Item Styling */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Order Total Styling */
+.order-total {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.order-total p {
+    color: #4CAF50;
+}
+
+/* Payment Method Section */
+.payment-method {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Payment Method Animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Payment Method Header */
+.payment-method h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Payment Options Styling */
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.payment-option input {
+    width: 20px;
+    height: 20px;
+}
+
+/* Proceed Button Styling */
+.proceed-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover State for Proceed Button */
+.proceed-btn:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .payment-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+}

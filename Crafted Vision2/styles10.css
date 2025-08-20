@@ -1,0 +1,190 @@
+/* General reset and body styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: url('geometry\ bg.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ensure the background image covers the screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    
+}
+
+.container {
+    background-color: #fff;
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #4CAF50;
+}
+
+/* Order Container */
+.order-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Order Summary Section */
+.order-summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1s ease-in-out;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.order-summary h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-total {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.order-total p {
+    color: #4CAF50;
+}
+
+/* Payment Method Section */
+.payment-method {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.payment-method h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.payment-option input {
+    width: 20px;
+    height: 20px;
+}
+
+/* Confirmation Section */
+.confirmation {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.confirmation p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .order-container {
+        gap: 20px;
+    }
+}
+
+/* Back Button Styling */
+.back-btn {
+    position: absolute;  /* Position it absolutely */
+    top: 20px;           /* Distance from the top of the page */
+    left: 20px;          /* Distance from the left edge */
+    background-color: #f1f1f1;  /* Light background color */
+    color: #0abe46;      /* Text color */
+    font-size: 18px;
+    padding: 10px 15px;
+    border: 2px solid #107726;  /* Blue border */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    z-index: 10;         /* Ensure the button is above other elements */
+}
+
+/* Hover State */
+.back-btn:hover {
+    background-color: #09b1bd;  /* Change background to blue when hovered */
+    color: #ffffff;             /* Change text color to white */
+    border-color: #0debcd;      /* Darken the border color when hovering */
+}

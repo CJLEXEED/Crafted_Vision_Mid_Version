@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Dashboard - Home</title>
+    <link rel="stylesheet" href="styles1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+</head>
+<body>
+
+    <!-- Header (Navigation Bar) -->
+    <header>
+        <!-- Logo with About Us link -->
+        <a href="Home.html" class="logo-container">
+            <img src="Crafted Vision_logo.png" alt="Art Dashboard Logo" class="logo">
+
+            <!-- Shopping Cart Icon (Link to Cart Page) -->
+            <a href="shopping.html" id="cart-icon" class="cart-icon">
+                <img src="cart-icon.png" alt="Shopping Cart">
+
+                <!-- History Icon (Link to Transaction Page) -->
+                <a href="transaction.html" id="hist-icon" class="hist-icon">
+                    <img src="Hist-icon1.png" alt="History">
+                </a>
+            </a>
+        </a>
+        <h1>Crafted Vision</h1>
+        <nav>
+            <a href="Home.html" class="active">Home</a>
+                <a href="Browse-art.html" id="browse-art-link">Browse Art</a>
+                <a href="sell-art.html" id="sell-art-link">Sell Art</a>
+                <a href="Account.html" id="account-link">Account</a>
+                <a href="community.html">Community</a>
+                <a href="help.html">Help</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Welcome Section -->
+        <section class="welcome" id="welcome-section">
+            <h2>Welcome to Crafted Vision</h2>
+            <p>Discover, create, and sell amazing art on our platform. Connect with artists worldwide.</p>
+            <a href="Login.html" id="get-started-btn" class="cta-button">Get Started</a>
+        </section>
+
+        <!-- Featured Art Section -->
+        <section class="featured-art">
+            <h2>Featured Art</h2>
+            <div class="art-gallery" id="art-gallery">
+                <!-- Art items will be dynamically injected here -->
+            </div>
+        </section>
+
+        <!-- Exclusive Art Section for Members -->
+        <section class="exclusive-art" id="exclusive-art">
+            <h2>Exclusive Member Art</h2>
+            <div class="art-gallery">
+                <div class="art-item">
+                    <img src="Famous art(2).jpg" alt="Exclusive Art 1">
+                    <h3>Exclusive Abstract Piece</h3>
+                    <p>Price: $970,000,000</p>
+                </div>
+                <div class="art-item">
+                    <img src="Famous art(1).jpg" alt="Exclusive Art 2">
+                    <h3>VIP Portrait Artwork</h3>
+                    <p>Price: $10,000,000</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="about-us">
+            <h2>About Us</h2>
+            <div class="about-us-content">
+                <img src="Crafted Vision_logo.png" alt="Crafted Vision Logo" class="about-us-logo">
+                <div class="about-us-text">
+                    <p>
+                        At Crafted Vision, we believe in the power of art to transform lives and connect people. 
+                        Our platform serves as a global hub for artists and art enthusiasts to showcase, discover, 
+                        and appreciate creative works. Join us in celebrating the vibrant world of art.
+                    </p>
+                    <a href="about-us.html" class="read-more-btn">Read More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Partners Section -->
+        <section class="team-partners">
+            <h2>Meet Our Team Partners</h2>
+            <div class="partners-grid">
+                <!-- Partner Card 1 -->
+                <div class="partner-card">
+                    <img src="team-partner1.jpg" alt="Partner 1">
+                    <h3>Artist 1</h3>
+                    <p>Creative Director</p>
+                </div>
+                <!-- Partner Card 2 -->
+                <div class="partner-card">
+                    <img src="team-partner2.jpg" alt="Partner 2">
+                    <h3>Artist 2</h3>
+                    <p>Art Curator</p>
+                </div>
+                <!-- Partner Card 3 -->
+                <div class="partner-card">
+                    <img src="team-partner3.jpg" alt="Partner 3">
+                    <h3>Artist 3</h3>
+                    <p>Marketing Strategist</p>
+                </div>
+                <!-- Partner Card 4 -->
+                <div class="partner-card">
+                    <img src="team-partner4.jpg" alt="Partner 4">
+                    <h3>Artist 4</h3>
+                    <p>Operations Manager</p>
+                </div>
+                <!-- Partner Card 5 -->
+                <div class="partner-card">
+                    <img src="team-partner5.jpg" alt="Partner 5">
+                    <h3>Artist 5</h3>
+                    <p>Technology Lead</p>
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- End of Main Content -->
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <a href="#" class="logo">
+                    <img src="Crafted Vision_logo.png" alt="Logo" />
+                </a>
+                <a href="Login.html" class="footer-link">Create account</a>
+                <a href="https://craftedvision.com" class="footer-link">Visit craftedvision.com</a>
+            </div>
+            <div class="footer-right">
+                <a href="eula.html" class="footer-link">EULA</a>
+                <a href="legal-notice.html" class="footer-link">Legal Notice</a>
+                <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+                <a href="terms-and-conditions.html" class="footer-link">Terms and Conditions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2009-2024 KUNSTMATRIX Technologies GmbH. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check if the user is logged in by checking localStorage
+        const isLoggedIn = localStorage.getItem("loggedIn");
+    
+        // Elements to hide or show based on login status
+        const cartIcon = document.getElementById('cart-icon');
+        const histIcon = document.getElementById('hist-icon');
+        const getStartedBtn = document.getElementById('get-started-btn');
+        const welcomeSection = document.getElementById('welcome-section');
+        const accountLink = document.getElementById('account-link');
+        const browseArtLink = document.getElementById('browse-art-link');
+        const sellArtLink = document.getElementById('sell-art-link');
+        const exclusiveArtSection = document.getElementById('exclusive-art');
+        const artGallery = document.getElementById('art-gallery');
+        const communityLink = document.querySelector('a[href="community.html"]');
+        const helpLink = document.querySelector('a[href="help.html"]');
+    
+        // If not logged in, remove cart and history icons, and show Get Started button
+        if (!isLoggedIn) {
+            cartIcon.style.display = 'none';  // Hide Shopping Cart icon
+            histIcon.style.display = 'none';  // Hide History icon
+            getStartedBtn.style.display = 'block';  // Show Get Started button
+            welcomeSection.style.display = 'block'; // Keep Welcome Section visible
+    
+            // Redirect to login page for non-logged-in users
+            accountLink.href = 'Login.html';
+            
+            // Hide unwanted links (Browse Art and Sell Art)
+            browseArtLink.style.display = 'none'; // Hide Browse Art link
+            sellArtLink.style.display = 'none'; // Hide Sell Art link
+            exclusiveArtSection.style.display = 'none'; // Hide exclusive art section
+        } else {
+            // If logged in, remove the Get Started button
+            getStartedBtn.style.display = 'none'; // Hide Get Started button
+            welcomeSection.style.display = 'block'; // Keep Welcome Section visible
+    
+            // If logged in, allow access to all sections
+            exclusiveArtSection.style.display = 'block';
+    
+            // Load user's preferences from localStorage (assuming it's stored there)
+            const userPreferences = JSON.parse(localStorage.getItem('userPreferences')) || [];
+    
+            // Dynamically populate featured art based on user preferences
+            const allArt = [
+                { src: 'Famous art(1).jpg', title: 'Composition VII', price: '$10,000,000', category: 'abstract' },
+                { src: 'Famous art(2).jpg', title: 'Mona Lisa', price: '$970,000,000', category: 'portrait' },
+                { src: 'Famous art(3).jpg', title: 'My Oregon: Land Of Natural Wonders.', price: '$2100', category: 'landscape' }
+            ];
+    
+            // Filter art based on user's preferences
+            const filteredArt = allArt.filter(art => userPreferences.includes(art.category));
+    
+            // If no preferences are selected, show all art
+            const artToDisplay = filteredArt.length > 0 ? filteredArt : allArt;
+    
+            // Populate the art gallery
+            artGallery.innerHTML = '';
+            artToDisplay.forEach(art => {
+                const artItem = document.createElement('div');
+                artItem.classList.add('art-item');
+                artItem.innerHTML = `
+                    <img src="${art.src}" alt="${art.title}">
+                    <h3>${art.title}</h3>
+                    <p>Price: ${art.price}</p>
+                `;
+                artGallery.appendChild(artItem);
+            });
+        }
+    
+        // If the user is not logged in, ensure only the Community and Help links are visible
+        if (!isLoggedIn) {
+            communityLink.style.display = 'block';  // Show Community link
+            helpLink.style.display = 'block';  // Show Help link
+        }
+    </script>
+    
+
+</body>
+</html>

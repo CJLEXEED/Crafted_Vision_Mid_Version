@@ -1,0 +1,274 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, rgba(21, 101, 192, 0.8), rgba(255, 64, 129, 0.8)), 
+                url('background-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+    animation: fadeInBackground 1.5s ease-out;
+}
+
+/* Enhanced Header */
+header {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    color: white;
+    width: 100%;
+    padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeInHeader 0.8s ease-out;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+/* Container Adjustments */
+.container {
+    padding: 1rem;
+    margin-top: 60px;
+}
+
+/* Logout Message Adjustments */
+.logout-message {
+    padding: 2rem;
+    max-width: 400px;
+}
+
+.logout-message h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.logout-message p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.action-buttons a {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* Social Links */
+.social-links {
+    margin-top: 1.5rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.social-icon {
+    padding: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Loading Spinner Adjustment */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .logout-message {
+        padding: 1.5rem;
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .logout-message {
+        padding: 1.2rem;
+        width: 85%;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Modern Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 2rem;
+    perspective: 1000px;
+}
+
+/* Enhanced Logout Message */
+.logout-message {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    max-width: 500px;
+    width: 90%;
+    transform-style: preserve-3d;
+    animation: messageAppear 1s ease-out;
+}
+
+.logout-message h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    animation: titleFloat 2s ease-in-out infinite;
+}
+
+.logout-message p {
+    font-size: 1.2rem;
+    color: #34495e;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    animation: fadeInText 1.5s ease-out;
+}
+
+/* Enhanced Link Styling */
+.logout-message a {
+    display: inline-block;
+    color: #fff;
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.logout-message a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+}
+
+/* Enhanced Animations */
+@keyframes messageAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) rotateX(-10deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes titleFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes fadeInBackground {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .logout-message {
+        padding: 2rem;
+        width: 85%;
+    }
+
+    .logout-message h2 {
+        font-size: 2rem;
+    }
+
+    .logout-message p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logout-message {
+        padding: 1.5rem;
+        width: 90%;
+    }
+
+    .logout-message h2 {
+        font-size: 1.8rem;
+    }
+
+    .logout-message p {
+        font-size: 1rem;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeOut 0.5s ease-out forwards;
+    animation-delay: 1.5s;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

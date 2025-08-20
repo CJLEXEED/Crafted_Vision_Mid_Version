@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+        nav a {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .grid img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .form-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Art Marketplace</h1>
+        <p>Discover, Create, and Sell Art</p>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Browse Art</a>
+        <a href="#">Sell Art</a>
+        <a href="#">Community</a>
+        <a href="#">Help</a>
+    </nav>
+    <div class="container">
+        <h2>Create Your Art</h2>
+        <div class="form-section">
+            <form id="artForm">
+                <label for="artTitle">Art Title:</label>
+                <input type="text" id="artTitle" name="artTitle" required><br><br>
+                <label for="artDescription">Description:</label>
+                <textarea id="artDescription" name="artDescription" required></textarea><br><br>
+                <label for="artPrice">Price ($):</label>
+                <input type="number" id="artPrice" name="artPrice" required><br><br>
+                <button type="submit">Submit Art</button>
+            </form>
+        </div>
+        <h2>Browse Art</h2>
+        <div class="grid" id="artGrid"></div>
+    </div>
+    <script>
+        document.getElementById("artForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const artTitle = document.getElementById("artTitle").value;
+            const artDescription = document.getElementById("artDescription").value;
+            const artPrice = document.getElementById("artPrice").value;
+            fetch('/api/addArt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: artTitle, description: artDescription, price: artPrice })
+            }).then(() => alert('Art Added!'));
+        });
+
+        function fetchArt() {
+            fetch('/api/getArt')
+                .then(response => response.json())
+                .then(artData => {
+                    const grid = document.getElementById('artGrid');
+                    grid.innerHTML = '';
+                    artData.forEach(art => {
+                        const artCard = document.createElement('div');
+                        artCard.innerHTML = `
+                            <img src="${art.image}" alt="${art.title}">
+                            <h3>${art.title}</h3>
+                            <p>${art.description}</p>
+                            <p>$${art.price}</p>`;
+                        grid.appendChild(artCard);
+                    });
+                });
+        }
+        fetchArt();
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+/* General body and background styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333; /* Ensuring text is readable with a neutral color */
+}
+
+/* Header styling */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    animation: fadeIn 1s ease-out; /* Fade in the header */
+}
+
+/* Logo container within the header */
+header .logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto; /* Centering the content in large screens */
+    padding: 0 20px;
+    animation: slideInLeft 1s ease-out; /* Slide the logo container from the left */
+}
+
+/* Logo image size */
+header .logo img {
+    width: 120px;
+    max-width: 100%; /* Make the logo responsive */
+    animation: fadeIn 2s ease-out; /* Fade in the logo */
+}
+
+/* Header navigation links */
+header nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Adds a gap between the logo and nav */
+    opacity: 0;
+    animation: fadeIn 2s ease-out forwards 1s; /* Fade in the navigation after the logo */
+}
+
+header nav a {
+    color: white;
+    margin: 0 20px; /* Increased space between nav items */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+header nav a:hover {
+    text-decoration: underline;
+    color: #f1c40f; /* Change to a golden color on hover */
+}
+
+/* Main content styling for terms page */
+main.terms-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 40px auto; /* Adds top and bottom margin to main container */
+    background-color: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Stronger shadow effect */
+    border-radius: 8px; /* Rounded corners for a more modern look */
+    animation: fadeInUp 1s ease-out; /* Fade-in and slide-up effect for the main container */
+}
+
+/* Heading styling */
+h1 {
+    text-align: center;
+    margin-bottom: 30px; /* Slightly reduced bottom margin for balance */
+    color: #333;
+    font-size: 2.5em; /* Larger title font for better emphasis */
+    animation: fadeIn 2s ease-out; /* Fade-in effect for the title */
+}
+
+/* Section headings (h2) styling */
+h2 {
+    color: #333;
+    font-size: 1.4em; /* Slightly larger h2 for better hierarchy */
+    margin-top: 20px;
+    margin-bottom: 10px; /* Added bottom margin to separate content */
+    font-weight: bold;
+    animation: fadeInUp 1.5s ease-out; /* Fade-in and slide-up effect for section headings */
+}
+
+/* Section paragraph styling */
+.section p {
+    color: #555;
+    line-height: 1.8; /* Increased line-height for easier readability */
+    margin-top: 10px;
+    font-size: 1em; /* Slightly adjusted font size for consistency */
+    text-align: justify; /* Justifies the text to look more polished */
+    opacity: 0;
+    animation: fadeInUp 2s ease-out forwards 1.5s; /* Fade-in and slide-up effect for paragraphs */
+}
+
+/* Links within sections */
+.section a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.section a:hover {
+    text-decoration: underline;
+    color: #f1c40f; /* Matches header hover color */
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin-top: 60px; /* Adds some space above the footer */
+    animation: fadeInUp 2s ease-out forwards 2s; /* Fade-in effect for the footer */
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive design tweaks */
+@media screen and (max-width: 768px) {
+    header .logo-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav {
+        flex-direction: column;
+        margin-top: 15px;
+    }
+
+    header nav a {
+        margin: 10px 0; /* Reduced space between links on small screens */
+    }
+
+    main.terms-container {
+        padding: 20px;
+        margin: 20px; /* Reduced padding and margin for smaller screens */
+    }
+
+    h1 {
+        font-size: 2em; /* Smaller title on mobile */
+    }
+
+    h2 {
+        font-size: 1.2em; /* Smaller section heading */
+    }
+
+    footer p {
+        font-size: 12px; /* Smaller footer text */
+    }
+}

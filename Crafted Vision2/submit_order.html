@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Order</title>
+    <link rel="stylesheet" href="styles10.css">
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-btn">← Back</a>
+
+    <div class="container">
+        <h1>Complete Your Order</h1>
+        
+        <div class="order-container">
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="order-items-container"></div>
+                <div class="order-total">
+                    <p>Total</p>
+                    <p class="order-total-price">$0.00</p>
+                </div>
+            </div>
+            
+            <div class="payment-method">
+                <h2>Select Payment Method</h2>
+                <div class="payment-options">
+                    <div class="payment-option">
+                        <input type="radio" id="credit-card" name="payment-method" value="credit-card">
+                        <label for="credit-card">Credit Card</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="paypal" name="payment-method" value="paypal">
+                        <label for="paypal">PayPal</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer">
+                        <label for="bank-transfer">Bank Transfer</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="confirmation">
+                <h2>Confirm Order</h2>
+                <p>Ensure that your order details are correct before submitting. Once submitted, your order will be processed and charged accordingly.</p>
+                <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const orderItemsContainer = document.querySelector('.order-items-container');
+            const totalPriceElement = document.querySelector('.order-total-price');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            function renderOrderSummary() {
+                orderItemsContainer.innerHTML = '';
+                let total = 0;
+
+                if (cart.length === 0) {
+                    totalPriceElement.textContent = '$0.00';
+                    return;
+                }
+
+                cart.forEach((item) => {
+                    const itemPrice = parseFloat(item.price);
+                    const itemQuantity = item.quantity || 1;
+                    total += itemPrice * itemQuantity;
+
+                    const orderItem = document.createElement('div');
+                    orderItem.classList.add('order-item');
+                    orderItem.innerHTML = `
+                        <p>${item.title}</p>
+                        <p>$${(itemPrice * itemQuantity).toFixed(2)}</p>
+                    `;
+
+                    orderItemsContainer.appendChild(orderItem);
+                });
+
+                totalPriceElement.textContent = `$${total.toFixed(2)}`;
+            }
+
+            renderOrderSummary();
+        });
+
+        function submitOrder() {
+    // Check if a payment method is selected
+    const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+    if (!paymentMethod) {
+        alert("Please select a payment method.");
+        return;
+    }
+
+    // Generate a transaction number
+    const transactionNumber = Math.floor(Math.random() * 1000000000).toString();
+
+    // Save the generated transaction number to localStorage
+    localStorage.setItem('generatedTransactionNumber', transactionNumber);
+
+    // Retrieve cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Get total price from the order summary
+    const totalPriceElement = document.querySelector('.order-total-price');
+    const total = totalPriceElement ? totalPriceElement.textContent : '0.00';
+
+    // Prepare order details object
+    const orderDetails = {
+        transactionNumber,
+        cart,
+        total,
+        paymentMethod: paymentMethod.value,
+        history: [`Order placed on ${new Date().toLocaleDateString()}`]
+    };
+
+    // Save the order data to localStorage (order history)
+    const orderHistory = JSON.parse(localStorage.getItem('cartData')) || [];
+    orderHistory.push(orderDetails);
+    localStorage.setItem('cartData', JSON.stringify(orderHistory));
+
+    // Notify user and clear the cart
+    alert(`Your order has been submitted! Your transaction number is: ${transactionNumber}`);
+    localStorage.removeItem('cart'); // Clear the cart from localStorage
+
+    // Redirect to home page
+    window.location.href = "Home.html";
+}
+
+
+    </script>
+</body>
+</html>

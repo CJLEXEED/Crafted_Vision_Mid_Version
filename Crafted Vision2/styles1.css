@@ -1,0 +1,508 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('flow wave bg.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ensures the background covers the entire screen */
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding-top: 60px;
+    animation: fadeIn 2s ease-out; /* Fade-in effect */
+    position: relative;
+}
+
+/* Header Styling */
+header {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: slideInHeader 1s ease-out; /* Header animation */
+}
+
+/* Header Container (logo and cart icon) */
+.header-container {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between logo and cart icon */
+    animation: fadeIn 1.5s ease-out; /* Animation for logo and cart icon */
+}
+
+/* Logo Styling */
+.logo-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 60px;  /* Adjust size of logo */
+    width: auto;
+    cursor: pointer;
+}
+
+
+/* Shopping Cart and History Icons */
+.cart-icon, .hist-icon {
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 1100; /* Ensure it stays on top */
+    animation: bounceIn 1s ease-out; /* Cart icon animation */
+}
+
+.cart-icon img, .hist-icon img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for scaling and fading */
+}
+
+/* Hover Effect: Slightly scale up the icon and change opacity */
+.cart-icon img:hover, .hist-icon img:hover {
+    transform: scale(1.2); /* Scale up the icon */
+    opacity: 0.8; /* Reduce opacity slightly */
+}
+
+/* Add a slight bounce effect when clicked */
+.cart-icon img:active, .hist-icon img:active {
+    animation: bounce 0.5s ease;
+}
+
+/* Keyframes for the bounce effect */
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1); /* Normal size */
+    }
+    50% {
+        transform: scale(0.9); /* Slightly smaller */
+    }
+}
+
+
+/* Header Title Styling */
+header h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-left: 10px;
+}
+
+/* Navigation Styling */
+nav {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px; /* Add space between navigation links */
+}
+
+nav a {
+    color: #fff;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: color 0.3s, transform 0.2s;
+}
+
+nav a:hover {
+    color: #ff9800; /* Orange color on hover */
+    transform: scale(1.1);
+}
+
+/* Main content styles */
+.main-content {
+    margin-top: 120px; /* Adjusted for fixed header */
+    width: 80%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Welcome Section */
+.welcome {
+    padding: 40px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeInContent 1.5s ease-out;
+}
+
+.welcome h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.welcome p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background-color: #d32f2f;
+    color: white;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #c62828;
+    transform: scale(1.05);
+}
+
+/* Featured Art Section */
+.featured-art {
+    margin-top: 40px;
+}
+
+.featured-art h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.art-gallery {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.art-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    width: 30%;
+}
+
+.art-item:hover {
+    transform: translateY(-10px);
+}
+
+.art-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.art-item h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.art-item p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* About Us Section */
+.about-us {
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    opacity: 1; /* Ensure visibility by setting opacity to 1 */
+    animation: fadeInUp 1.5s ease-in-out forwards; /* Fade and slide in effect */
+    z-index: 1; /* Ensure content is above the background */
+}
+
+.about-us h2 {
+    font-size: 2.5rem;
+    color: #fff; /* White color for better contrast against dark background */
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 1; /* Make the title visible */
+    animation: fadeInUp 1.5s ease-in-out 0.5s forwards; /* Fade and slide in effect for the title */
+}
+
+.about-us-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-wrap: wrap; /* Allows for responsive stacking on smaller screens */
+}
+
+.about-us-logo {
+    width: 200px;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the logo */
+    transition: transform 0.3s ease;
+    opacity: 1; /* Make the logo visible */
+    animation: fadeInUp 1.5s ease-in-out 1s forwards; /* Fade and slide in effect for logo */
+}
+
+.about-us-logo:hover {
+    transform: scale(1.1); /* Hover effect for logo */
+}
+
+.about-us-text {
+    text-align: left;
+    max-width: 600px;
+    opacity: 1; /* Make the text visible */
+    animation: fadeInUp 1.5s ease-in-out 1.5s forwards; /* Fade and slide in effect for text */
+}
+
+.about-us-text p {
+    font-size: 18px;
+    color: #ffffff; /* Lighter color for readability */
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Read More Button */
+.read-more-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #007BFF; /* Slightly brighter background */
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Added slight shadow for better visibility */
+}
+
+/* Hover effect for Read More Button */
+.read-more-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Increased hover shadow */
+}
+
+/* Team Partners Section */
+.team-partners {
+    padding: 60px 20px;
+    text-align: center;
+    opacity: 1; /* Ensure visibility */
+    animation: fadeInUp 1.5s ease-in-out 2s forwards;
+    position: relative;
+    z-index: 0;
+}
+
+.team-partners h2 {
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #ffffff; /* Darker color for better contrast */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 1; /* Ensure visibility */
+    animation: fadeInUp 1.5s ease-in-out 2.5s forwards;
+}
+
+/* Partners Grid */
+.partners-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.partner-card {
+    background-color: #fff; /* Bright background for visibility */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 1; /* Ensure visibility */
+    animation: fadeInUp 1.5s ease-in-out 3s forwards;
+}
+
+.partner-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.partner-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.partner-card h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.partner-card p {
+    font-size: 1rem;
+    color: #777;
+}
+
+
+/* Footer Styling */
+footer {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 30px 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 100%;
+    bottom: 0;
+    position: relative;
+}
+
+/* Footer Content Layout */
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-left, .footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-left a,
+.footer-right a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+.footer-left .logo img {
+    width: 60px; /* Adjust size of logo in footer */
+    height: auto;
+}
+
+.footer-right a:hover {
+    color: #ff9800; /* Orange color on hover */
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInHeader {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInContent {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Click Animations for Logo and Cart Icon */
+@keyframes logoClickAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes cartClickAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Trigger animation on click */
+.logo:active {
+    animation: logoClickAnimation 0.5s ease;
+}
+
+.cart-icon:active img {
+    animation: cartClickAnimation 0.5s ease;
+}

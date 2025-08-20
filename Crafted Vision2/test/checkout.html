@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="styles8.css">
+</head>
+<body>
+<!-- Back Button -->
+<a href="shopping.html" class="back-btn">← Back to Shop</a>
+
+<div class="checkout-container">
+    <h1>Checkout</h1>
+
+    <div class="checkout-layout">
+        <!-- Cart Summary (Left) -->
+        <div class="cart-summary">
+            <h2>Cart Summary</h2>
+            <div id="cart-items-container"></div> <!-- Cart items will be added here dynamically -->
+
+            <!-- Total -->
+            <div class="total">
+                <p>Total: $<span id="total-price">0</span></p>
+            </div>
+
+            <!-- Checkout Button -->
+            <a href="payment.html" class="checkout-btn">Proceed to Payment</a>
+        </div>
+
+        <!-- Shipping & Payment Form (Right) -->
+        <div class="form-section">
+            <h2>Shipping Information</h2>
+            <form id="checkout-form" action="submit_order.html" method="POST" onsubmit="return validateForm()">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" required>
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="address">Shipping Address</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required>
+
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" required>
+
+                <label for="zip">Zip Code</label>
+                <input type="number" id="zip" name="zip" required>
+
+                <label for="country">Country</label>
+                <select id="country" name="country" required>
+                    <option value="us">United States</option>
+                    <option value="ca">Canada</option>
+                    <!-- Add other countries as needed -->
+                </select>
+
+                <label for="notes">Additional Notes</label>
+                <textarea id="notes" name="notes"></textarea>
+
+                <h2>Payment Information</h2>
+                <label for="card-number">Credit Card Number</label>
+                <input type="number" id="card-number" name="card-number" required>
+
+                <label for="expiry-date">Expiry Date</label>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
+
+                <label for="cvv">CVV</label>
+                <input type="number" id="cvv" name="cvv" required>
+
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <div class="payment-method">
+                        <input type="radio" id="visa" name="payment-method" value="visa" required>
+                        <label for="visa">Visa</label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="mastercard" name="payment-method" value="mastercard" required>
+                        <label for="mastercard">Mastercard</label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="paypal" name="payment-method" value="paypal" required>
+                        <label for="paypal">PayPal</label>
+                    </div>
+                </div>
+
+                <a href="submit_order.html">
+                    <button type="submit">Complete Order</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Form validation
+function validateForm() {
+    // Email validation
+    const email = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!email.match(emailPattern)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    // Shipping address validation
+    const address = document.getElementById('address').value;
+    if (address.trim() === "") {
+        alert("Please enter a valid shipping address.");
+        return false;
+    }
+
+    // Phone number validation based on selected country
+    const phone = document.getElementById('phone').value;
+    const country = document.getElementById('country').value;
+    if (country === "us" && !/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number for the United States.");
+        return false;
+    } else if (country === "ca" && !/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number for Canada.");
+        return false;
+    }
+
+    // State validation based on selected country
+    const state = document.getElementById('state').value;
+    if (country === "us" && state.trim() === "") {
+        alert("Please enter a valid state for the United States.");
+        return false;
+    } else if (country === "ca" && state.trim() === "") {
+        alert("Please enter a valid province for Canada.");
+        return false;
+    }
+
+    return true; // Proceed with form submission
+}
+
+// Cart and checkout functionality (existing code remains unchanged)
+document.addEventListener('DOMContentLoaded', function () {
+    const cartItemsContainer = document.querySelector('#cart-items-container');
+    const totalPriceElement = document.querySelector('#total-price');
+    const checkoutButton = document.querySelector('.checkout-btn');
+
+    // Load cart from localStorage or initialize an empty cart
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Function to render cart items
+    function renderCart() {
+        cartItemsContainer.innerHTML = ''; // Clear current items
+        let total = 0;
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            checkoutButton.classList.add('disabled');
+            totalPriceElement.textContent = '0.00';
+            return;
+        }
+
+        checkoutButton.classList.remove('disabled');
+
+        cart.forEach((item) => {
+            const itemPrice = parseFloat(item.price);
+            total += itemPrice;
+
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.dataset.price = itemPrice;
+
+            cartItem.innerHTML = `
+                <img src="${item.imageSrc}" alt="${item.title}">
+                <div class="cart-item-details">
+                    <h3>${item.title}</h3>
+                    <p>Price: $${itemPrice.toFixed(2)}</p>
+                </div>
+            `;
+
+            cartItemsContainer.appendChild(cartItem);
+        });
+
+        updateTotalPrice();
+    }
+
+    // Function to update the total price
+    function updateTotalPrice() {
+        let total = 0;
+        const items = document.querySelectorAll('.cart-item');
+
+        items.forEach(item => {
+            const price = parseFloat(item.dataset.price) || 0;
+            total += price;
+        });
+
+        totalPriceElement.textContent = `${total.toFixed(2)}`;
+    }
+
+    // Initialize cart display
+    renderCart();
+});
+
+let lastScrollTop = 0; // Variable to track scroll position
+const backButton = document.querySelector('.back-btn');
+
+window.addEventListener('scroll', function () {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop) {
+        // Scrolling down - hide the back button
+        backButton.classList.add('hidden');
+    } else {
+        // Scrolling up - show the back button
+        backButton.classList.remove('hidden');
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative scroll
+});
+</script>

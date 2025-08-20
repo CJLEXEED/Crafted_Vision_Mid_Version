@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles7.css">
+</head>
+<body>
+
+<div class="cart-background">
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+
+        <!-- Cart Items -->
+        <div class="cart-items">
+            <!-- Items will be dynamically populated -->
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h3>Total</h3>
+            <div class="total-price">$0.00</div>
+            <a href="checkout.html" class="checkout-btn disabled">Proceed to Checkout</a>
+        </div>
+
+        <!-- Empty Cart Message -->
+        <div class="cart-empty">
+            <p>Your cart is currently empty. Add some items to your cart!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Back to Shop Button -->
+<a href="Browse-art.html" class="back-btn">Back to Shop</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const totalPriceElement = document.querySelector('.total-price');
+    const checkoutButton = document.querySelector('.checkout-btn');
+    const cartEmptyMessage = document.querySelector('.cart-empty');
+
+    // Load cart from localStorage or initialize an empty cart
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+   // Function to render cart items
+function renderCart() {
+    cartItemsContainer.innerHTML = ''; // Clear current items
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartEmptyMessage.style.display = 'block';
+        checkoutButton.classList.add('disabled');
+        totalPriceElement.textContent = '$0.00';
+        return;
+    }
+
+    cartEmptyMessage.style.display = 'none';
+    checkoutButton.classList.remove('disabled');
+
+    // Retrieve the artist's name from localStorage (if available)
+    const storedArtistName = localStorage.getItem('artistName');
+
+    cart.forEach((item, index) => {
+        const itemPrice = parseFloat(item.price);
+        total += itemPrice;
+
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.dataset.price = itemPrice;
+
+        // Check if there's a stored artist name in localStorage and use it, else fallback to the artist in the cart item
+        const artistNameToDisplay = storedArtistName || item.artist || 'Unknown';
+
+        cartItem.innerHTML = `
+            <img src="${item.imageSrc}" alt="${item.title}">
+            <div class="cart-item-details">
+                <h3>${item.title}</h3>
+                <p>Artist: ${artistNameToDisplay}</p>  <!-- Display artist name -->
+                <p>Price: $<span class="item-price">${itemPrice.toFixed(2)}</span></p>
+            </div>
+            <div class="cart-item-quantity">
+                <button class="decrease-btn">-</button>
+                <input type="number" value="1" min="1">
+                <button class="increase-btn">+</button>
+            </div>
+            <button class="remove-btn" data-index="${index}">Remove</button>
+        `;
+
+        cartItemsContainer.appendChild(cartItem);
+    });
+
+    // Update the total price of the cart
+    totalPriceElement.textContent = `$${total.toFixed(2)}`;
+
+    // Call updateTotalPrice() after rendering the cart
+    updateTotalPrice();
+}
+
+
+    // Function to update the total price
+    function updateTotalPrice() {
+        let total = 0;
+        const items = document.querySelectorAll('.cart-item');
+
+        items.forEach(item => {
+            const quantity = parseInt(item.querySelector('input').value, 10) || 0;
+            const price = parseFloat(item.querySelector('.item-price').textContent) || 0;
+            total += quantity * price;
+        });
+
+        totalPriceElement.textContent = `$${total.toFixed(2)}`;
+    }
+
+    // Event listener for cart actions
+    cartItemsContainer.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-btn')) {
+            const index = parseInt(e.target.dataset.index, 10);
+            cart.splice(index, 1); // Remove item from cart
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            renderCart(); // Re-render cart
+        }
+
+        if (e.target.classList.contains('decrease-btn')) {
+            const input = e.target.nextElementSibling;
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+                updateTotalPrice();
+            }
+        }
+
+        if (e.target.classList.contains('increase-btn')) {
+            const input = e.target.previousElementSibling;
+            input.value = parseInt(input.value) + 1;
+            updateTotalPrice();
+        }
+    });
+
+    // Event listener for manual quantity input
+    cartItemsContainer.addEventListener('input', function (e) {
+        if (e.target.tagName === 'INPUT') {
+            updateTotalPrice();
+        }
+    });
+
+    // Initialize cart display
+    renderCart();
+});
+</script>
+
+</body>
+</html>

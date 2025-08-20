@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Art - Art Dashboard</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header (Navigation Bar) -->
+    <header>
+        <a href="Home.html" class="logo-container">
+            <img src="Crafted Vision_logo.png" alt="Art Dashboard Logo" class="logo">
+            <a href="shopping.html" class="cart-icon">
+                <span class="cart-count" id="cartCount">0</span>
+
+                <img src="cart-icon.png" alt="Shopping Cart">
+                
+                <!-- History Icon (Link to Transaction Page) -->
+
+                 <a href="transaction.html" class="hist-icon">
+                    <img src="Hist-icon1.png" alt="History">
+            </a>
+        </a>
+        <h1>Browse Art</h1>
+        <nav>
+            <a href="Home.html"><i class="fas fa-home"></i> Home</a>
+            <a href="Browse-art.html"><i class="fas fa-paint-brush"></i> Browse Art</a>
+            <a href="sell-art.html" class="active"><i class="fas fa-store"></i> Sell Art</a>
+            <a href="Account.html" id="account-link"><i class="fas fa-user"></i> Account</a>
+            <a href="community.html"><i class="fas fa-users"></i> Community</a>
+            <a href="help.html"><i class="fas fa-question-circle"></i> Help</a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Explore Artwork</h2>
+
+        <!-- Search Bar Section -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for artwork..." oninput="searchArt()">
+            <label for="artCategory">Art Category:</label>
+            <select id="artCategory" name="artCategory" required>
+                <option value="painting">Painting</option>
+                <option value="drawing">Drawing</option>
+                <option value="sculpture">Sculpture</option>
+                <option value="digitalArts">Digital Arts</option>
+                <option value="visualArts">Visual Arts</option>
+                <option value="photography">Photography</option>
+                <option value="oilPainting">Oil Painting</option>
+                <option value="waterPainting">Water Painting</option>
+                <option value="abstract">Abstract</option>
+                <option value="pottery">Pottery</option>
+                <option value="comics">Comics</option>
+                <option value="expressionism">Expressionism</option>
+            </select>
+            <button onclick="searchArt()" class="search-btn">
+                <img src="search-icon.png" alt="Search Icon">
+            </button>
+        </div>
+
+        <div class="art-grid">
+            <!-- Art items will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="artModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-header" id="modalTitle">Title: </div>
+            <img id="modalImage" src="" alt="Art Image">
+            <p><strong>Artist:</strong> <span id="modalArtist"></span></p>
+            <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+            <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+            <p><strong>Dimensions:</strong>
+                <select id="modalDimensions">
+                    <option value="small">Small (10x10 cm)</option>
+                    <option value="medium">Medium (50x50 cm)</option>
+                    <option value="large">Large (100x100 cm)</option>
+                    <option value="miniature">Miniature (4x6 in)</option>
+                    <option value="smallSquare">Small Square (8x8 in)</option>
+                    <option value="mediumSquare">Medium Square (20x20 in)</option>
+                    <option value="largeSquare">Large Square (36x36 in)</option>
+                    <option value="panoramic">Panoramic (10x30 in)</option>
+                    <option value="wallArt">Wall Art (72x96 in)</option>
+                </select>
+            </p>
+            <button id="addToCartBtn" onclick="addToCart()">Add to Cart</button>
+         <!-- New Join Discussion Button -->
+        <button class="join-discussion-btn" onclick="joinDiscussion()">Join Discussion</button>
+    </div>
+</div>
+
+    <script>
+    // Function to handle "Join Discussion" button click
+    function joinDiscussion() {
+        window.location.href = "discussion.html"; // Redirect to discussion page
+}
+
+
+// Function to handle "Join Discussion" button click
+function joinDiscussion() {
+            window.location.href = "discussion.html?id=" + currentItem.id + 
+                "&title=" + encodeURIComponent(currentItem.title) + 
+                "&artist=" + encodeURIComponent(currentItem.artist) + 
+                "&description=" + encodeURIComponent(currentItem.description) + 
+                "&image=" + encodeURIComponent(currentItem.imageSrc) + 
+                "&price=" + encodeURIComponent(currentItem.price); // Pass art details to discussion page
+        }
+
+        let currentItem = {}; // Temporary holder for the currently selected item
+        let cart = JSON.parse(localStorage.getItem('cart')) || []; // Load cart from localStorage
+        let lastSelectedDimension = ''; // Track the last selected dimension to avoid multiple multiplications
+        let basePrice = 0; // To store the original price
+
+        // Function to open the modal with the specific art details
+        function openModal(title, artist, price, imageSrc, description) {
+            currentItem = { title, artist, price, imageSrc, description }; // Store the current item
+            basePrice = parseFloat(price); // Store the base price
+            document.getElementById("modalTitle").textContent = "Title: " + title;
+            document.getElementById("modalArtist").textContent = artist;
+            document.getElementById("modalPrice").textContent = price;
+            document.getElementById("modalImage").src = imageSrc;
+            document.getElementById("modalDescription").textContent = description;
+            document.getElementById("artModal").style.display = "flex"; // Make the modal visible
+
+            // Set initial price when the modal opens
+            updatePrice(price); // Set initial price based on the default dimension
+        }
+
+        // Function to update the price based on the selected dimension
+        function updatePrice(basePrice) {
+            const dimension = document.getElementById("modalDimensions").value;
+            let finalPrice = parseFloat(basePrice);
+
+            // Avoid updating price if the same dimension is selected again
+            if (dimension === lastSelectedDimension) {
+                return; // Skip the price update if the same dimension is selected
+            }
+
+            // Adjust price based on selected dimension
+            if (dimension === "medium") finalPrice = finalPrice * 1.25;
+            else if (dimension === "large") finalPrice = finalPrice * 1.5;
+            else if (dimension === "miniature") finalPrice = finalPrice * 0.75;
+            else if (dimension === "smallSquare") finalPrice = finalPrice * 1.1;
+            else if (dimension === "mediumSquare") finalPrice = finalPrice * 1.3;
+            else if (dimension === "largeSquare") finalPrice = finalPrice * 1.4;
+            else if (dimension === "panoramic") finalPrice = finalPrice * 1.2;
+            else if (dimension === "wallArt") finalPrice = finalPrice * 2;
+            
+            else {
+                // Default action if none of the conditions match
+                console.log("Unknown dimension selected. Setting final price to base price.");
+                finalPrice = basePrice; // Set final price to base price if the dimension is unknown
+                }
+
+            // Update price display in modal
+            document.getElementById("modalPrice").textContent = `${finalPrice.toFixed(2)}`;
+            currentItem.price = finalPrice.toFixed(2); // Update current item's price
+
+            // Update the last selected dimension
+            lastSelectedDimension = dimension;
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("artModal").style.display = "none";
+        }
+
+        // Close the modal if the user clicks outside the modal content
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("artModal")) {
+                closeModal();
+            }
+        };
+
+        // Function to add the current item to the shopping cart
+        function addToCart() {
+            if (!currentItem.title) return; // No item selected
+            cart.push(currentItem); // Add the current item to the cart
+            localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to localStorage
+            alert(`${currentItem.title} has been added to your cart!`);
+            closeModal(); // Close the modal
+        }
+
+        // Event listener to update the price when the user changes the dimension
+        document.getElementById("modalDimensions").addEventListener("change", function() {
+            updatePrice(currentItem.price);
+        });
+
+        // Dynamically load and display art from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const artCollection = JSON.parse(localStorage.getItem('artCollection')) || [];
+            const artGrid = document.querySelector('.art-grid');
+
+            if (artCollection.length === 0) {
+                artGrid.innerHTML = "<p>No art available yet!</p>";
+            } else {
+                displayArt(artCollection); // Display all art initially
+            }
+        });
+
+        // Function to display artwork
+function displayArt(artCollection) {
+    const artGrid = document.querySelector('.art-grid');
+    artGrid.innerHTML = ''; // Clear current display
+
+    // Retrieve the artist's name from localStorage (if available)
+    const storedArtistName = localStorage.getItem('artistName');
+
+    artCollection.forEach(art => {
+        const artElement = document.createElement('div');
+        artElement.classList.add('art-item');
+        
+        // Check if there's a stored artist name in localStorage and use it, else fallback to the artist in the art object
+        const artistNameToDisplay = storedArtistName || art.artist || 'Unknown';
+        
+        artElement.innerHTML = `
+            <img src="${art.image}" alt="${art.title}" style="max-width: 300px;">
+            <h3>${art.title}</h3>
+            <p>Artist: ${artistNameToDisplay}</p>
+            <p>Category: ${art.category}</p>
+            <p>Price: $${art.price}</p>
+            <button onclick="openModal('${art.title}', '${artistNameToDisplay}', '${art.price}', '${art.image}', '${art.description}')">View Details</button>
+        `;
+        
+        artGrid.appendChild(artElement);
+    });
+}
+
+
+        // Function to filter art based on search input
+        function searchArt() {
+            const searchInput = document.getElementById("searchInput").value.toLowerCase();
+            const artCategory = document.getElementById("artCategory").value;
+            const artCollection = JSON.parse(localStorage.getItem('artCollection')) || [];
+
+            const filteredArt = artCollection.filter(art => {
+                return (art.title.toLowerCase().includes(searchInput) || art.description.toLowerCase().includes(searchInput)) && 
+                       (art.category === artCategory || artCategory === "all");
+            });
+
+            displayArt(filteredArt); // Display filtered art
+        }
+    </script>
+     <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

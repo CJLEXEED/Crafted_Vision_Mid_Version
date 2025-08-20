@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Art Dashboard</title>
+    <link rel="stylesheet" href="community.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="Home.html" class="logo-container">
+                <img src="Crafted Vision_logo.png" alt="Art Dashboard Logo" class="logo">
+            </a>
+            
+            <div class="nav-icons">
+                <a href="shopping.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="transaction.html" class="hist-icon">
+                    <i class="fas fa-history"></i>
+                </a>
+            </div>
+
+            <h1><i class="fas fa-users"></i> Global Community</h1>
+            
+            <nav>
+                <a href="Home.html"><i class="fas fa-home"></i> Home</a>
+                <a href="Browse-art.html"><i class="fas fa-paint-brush"></i> Browse Art</a>
+                <a href="sell-art.html"><i class="fas fa-store"></i> Sell Art</a>
+                <a href="Account.html"><i class="fas fa-user"></i> Account</a>
+                <a href="community.html" class="active"><i class="fas fa-users"></i> Community</a>
+                <a href="help.html"><i class="fas fa-question-circle"></i> Help</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <i class="fas fa-user-circle profile-icon"></i>
+                <h2>Welcome, Artist</h2>
+                <p>Explore art discussions, share your work, and connect with other artists.</p>
+                <button class="join-btn" onclick="joinDiscussion()">
+                    <i class="fas fa-comments"></i> Join Discussion
+                </button>
+            </div>
+        </div>
+
+        <div class="community-posts">
+            <h2><i class="fas fa-newspaper"></i> Latest Posts</h2>
+            <div class="posts-container">
+                <div class="post" id="post1">
+                    <div class="post-header">
+                        <h3><i class="fas fa-lightbulb"></i> Art Tips & Tricks</h3>
+                        <span class="post-date">Posted 2 days ago</span>
+                    </div>
+                    <p id="post1-preview">Explore the latest tips and tricks from professional artists. Learn new techniques for your next masterpiece!</p>
+                    <button class="read-more-btn" onclick="togglePost('post1')">
+                        <i class="fas fa-chevron-down"></i> Read More
+                    </button>
+                    <div id="post1-full" class="post-content" style="display:none;">
+                        <p>Here's the full article on advanced painting techniques...</p>
+                    </div>
+                </div>
+
+                <div class="post" id="post2">
+                    <div class="post-header">
+                        <h3><i class="fas fa-share-alt"></i> Share Your Artwork</h3>
+                        <span class="post-date">Posted 3 days ago</span>
+                    </div>
+                    <p id="post2-preview">Share your latest creation with the community and get feedback from fellow artists!</p>
+                    <button class="read-more-btn" onclick="togglePost('post2')">
+                        <i class="fas fa-chevron-down"></i> Read More
+                    </button>
+                    <div id="post2-full" class="post-content" style="display:none;">
+                        <p>Post your artwork in the comments below and get feedback from others...</p>
+                    </div>
+                </div>
+
+                <div class="post" id="post3">
+                    <div class="post-header">
+                        <h3><i class="fas fa-trophy"></i> Art Challenges</h3>
+                        <span class="post-date">Posted 4 days ago</span>
+                    </div>
+                    <p id="post3-preview">Join our weekly art challenge and see how you compare to other artists! Compete, create, and win!</p>
+                    <button class="read-more-btn" onclick="togglePost('post3')">
+                        <i class="fas fa-chevron-down"></i> Read More
+                    </button>
+                    <div id="post3-full" class="post-content" style="display:none;">
+                        <p>This week's challenge is all about portraiture. Show us your best work...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="community-submission">
+            <h2><i class="fas fa-comment-dots"></i> Recent Thoughts and Ratings</h2>
+            <div id="submission-container" class="submission-content"></div>
+        </div>
+    </div>
+</body>
+</html>
+    <script>
+        // Function to toggle visibility of full post content
+        function togglePost(postId) {
+            var preview = document.getElementById(postId + "-preview");
+            var fullContent = document.getElementById(postId + "-full");
+            var button = document.querySelector("#" + postId + " .read-more-btn");
+            
+            if (fullContent.style.display === "none") {
+                fullContent.style.display = "block";
+                preview.style.display = "none";
+                button.textContent = "Read Less";
+            } else {
+                fullContent.style.display = "none";
+                preview.style.display = "block";
+                button.textContent = "Read More";
+            }
+        }
+
+        // Function to handle "Join Discussion" button click
+        function joinDiscussion() {
+            window.location.href = "discussion.html"; // Redirect to discussion page
+        }
+
+        // Function to delete the user's thoughts submission permanently
+        function deleteSubmission() {
+            // Clear the sessionStorage to ensure thoughts are permanently deleted
+            sessionStorage.removeItem('userThoughts');
+            sessionStorage.removeItem('userRating');
+            
+            // Update the UI to reflect that the thoughts have been deleted
+            const submissionContainer = document.getElementById('submission-container');
+            submissionContainer.innerHTML = '<p>Your thoughts have been permanently deleted.</p>';
+        }
+
+        // Get query parameters from the URL (if any)
+        const urlParams = new URLSearchParams(window.location.search);
+        const thoughts = urlParams.get('thoughts');
+        const rating = urlParams.get('rating');
+
+        // Check if thoughts exist in sessionStorage, otherwise use URL params
+        const submissionContainer = document.getElementById('submission-container');
+
+        if (sessionStorage.getItem('userThoughts')) {
+            // If the thoughts and rating are in sessionStorage, display them
+            const storedThoughts = sessionStorage.getItem('userThoughts');
+            const storedRating = sessionStorage.getItem('userRating');
+            submissionContainer.innerHTML = `
+                <p><strong>Thoughts:</strong> ${storedThoughts}</p>
+                <p><strong>Rating:</strong> ${storedRating} stars</p>
+                <button class="delete-btn" onclick="deleteSubmission()">Delete My Thoughts</button>
+            `;
+        } else if (thoughts && rating) {
+            // If there are thoughts in the URL parameters, display them and store in sessionStorage
+            sessionStorage.setItem('userThoughts', thoughts);
+            sessionStorage.setItem('userRating', rating);
+            submissionContainer.innerHTML = `
+                <p><strong>Thoughts:</strong> ${thoughts}</p>
+                <p><strong>Rating:</strong> ${rating} stars</p>
+                <button class="delete-btn" onclick="deleteSubmission()">Delete My Thoughts</button>
+            `;
+        } else {
+            submissionContainer.innerHTML = '<p>No submissions available.</p>';
+        }
+    </script>
+
+</body>
+</html>

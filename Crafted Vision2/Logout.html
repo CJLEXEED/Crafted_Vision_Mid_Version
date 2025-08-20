@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Crafted Vision</title>
+    <link rel="stylesheet" href="styles5.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1><i class="fas fa-sign-out-alt"></i> Logout</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="logout-message">
+            <i class="fas fa-check-circle" style="font-size: 3rem; color: #2ecc71; margin-bottom: 1rem;"></i>
+            <h2>Successfully Logged Out</h2>
+            <p>Thank you for using Crafted Vision! We hope to see you again soon.</p>
+            <div class="action-buttons">
+                <a href="Login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Log In Again</a>
+                <a href="Home.html" class="home-btn"><i class="fas fa-home"></i> Back to Home</a>
+            </div>
+            <div class="social-links">
+                <p>Follow us on social media:</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Clear session data
+        window.onload = function() {
+            localStorage.removeItem('loggedIn');
+            sessionStorage.clear();
+            
+            // Hide loading animation after 1.5 seconds
+            setTimeout(() => {
+                document.querySelector('.loading').style.display = 'none';
+            }, 1500);
+
+            // Prevent going back to protected pages
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, document.URL);
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,680 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('flow\ wave\ bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding-top: 60px;
+    animation: fadeIn 2s ease-out; /* Fade-in effect */
+    position: relative;
+}
+
+/* Header Styling */
+header {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: slideInHeader 1s ease-out;
+}
+
+/* Header Container */
+.header-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    position: relative;
+}
+
+/* Logo Container */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo {
+    height: 45px;
+    width: auto;
+    margin-right: 15px;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation Icons */
+.nav-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 30px;
+    animation: slideInIcons 0.8s ease-out;
+}
+
+.cart-icon, .hist-icon {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    padding: 8px;
+    transition: all 0.3s ease;
+}
+
+.cart-icon:hover, .hist-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.cart-icon img, .hist-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    animation: bounceIn 0.5s ease;
+}
+
+/* Navigation Menu */
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+nav a {
+    position: relative;
+    color: #fff;
+    font-size: 1.rem;
+    text-decoration: none;
+    padding: 8px 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #ff9800;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav a:hover {
+    color: #ff9800;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+nav a.active {
+    color: #ff9800;
+    background: rgba(255, 152, 0, 0.15);
+}
+
+/* Main Container */
+.container {
+    width: 90%;
+    max-width: 1400px;
+    display: flex;
+    gap: 30px;
+    margin-top: 100px;
+    padding: 20px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .nav-icons {
+        margin-right: 15px;
+        gap: 15px;
+    }
+
+    nav {
+        gap: 15px;
+    }
+
+    nav a {
+        padding: 6px 12px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Header Title */
+header h1 {
+    font-size: 2.2rem;
+    margin: 0 30px;
+    white-space: nowrap;
+    color: #fff;
+}
+
+/* Main Container Styling */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 120px; /* Offset the fixed header */
+}
+
+/* Heading for Explore Artwork */
+h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Art Grid Styling */
+.art-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    width: 100%;
+    justify-items: center;
+}
+
+/* Art Item Card Styling */
+.art-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.art-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.art-item h3 {
+    font-size: 1.3rem;
+    margin-top: 15px;
+    color: #333;
+}
+
+.art-item p {
+    font-size: 1.1rem;
+    color: #777;
+    margin: 5px 0;
+}
+
+.art-item button {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 15px;
+}
+
+.art-item button:hover {
+    background-color: #c62828;
+    transform: scale(1.05);
+}
+
+/* Hover Effect for Art Item */
+.art-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.art-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Modal Styling */
+/* Modal Content Container */
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+/* Close Button (X) */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+/* Modal Header */
+.modal-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Image Styling */
+#modalImage {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+/* General Text Styling for Details */
+p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Strong Text (Label) */
+strong {
+    color: #333;
+}
+
+
+
+/* Select Box (Dimensions) */
+#modalDimensions {
+    padding: 5px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/* Input Box (Quantity) */
+#modalQuantity {
+    width: 60px;
+    padding: 5px;
+    font-size: 14px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button Styling */
+#addToCartBtn {
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#addToCartBtn:hover {
+    background-color: #218838;
+}
+
+/* Modal Overlay (Background Dim) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none;
+}
+
+/* Modal Open State */
+.modal-overlay.show {
+    display: block;
+}
+
+/* Add to Cart Button Styles */
+#addToCartBtn {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#addToCartBtn:hover {
+    background-color: #f57c00;
+    transform: scale(1.05);
+}
+
+/* Search Container Styling */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Search Input Field Styling */
+.search-container input {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Search Button Styling */
+.search-container button {
+    background-color: #4CAF50; /* Green background */
+    border: none;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-container button img {
+    width: 20px; /* Image size */
+    height: 20px;
+}
+
+/* Hover Effect for Search Button */
+.search-container button:hover {
+    background-color: #45a049;
+}
+
+/* Focus Effect for Search Button */
+.search-container button:focus {
+    outline: none;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInHeader {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInContent {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Click Animations for Logo and Cart Icon */
+@keyframes logoClickAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes cartClickAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Trigger animation on click */
+.logo:active {
+    animation: logoClickAnimation 0.5s ease;
+}
+
+.cart-icon:active img {
+    animation: cartClickAnimation 0.5s ease;
+}
+
+
+/* Style for the search-container */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style for the category label */
+.search-container label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 5px;
+    color: #f7f6f6;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+/* Style for the category dropdown */
+.search-container select {
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    animation: slideIn 1s 0.2s forwards; /* Delayed animation */
+}
+
+/* Hover effect for the dropdown */
+.search-container select:hover {
+    border-color: #888;
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Focus effect for the dropdown */
+.search-container select:focus {
+    border-color: #555;
+    transform: scale(1.08);
+}
+
+/* Search button styling */
+.search-btn {
+    padding: 8px 12px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    animation: slideIn 1s 0.4s forwards; /* Delayed animation */
+}
+
+.search-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hover effect for the button */
+.search-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Slight zoom */
+}
+
+/* Keyframes for fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Keyframes for slide-in effect */
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* Styling for the Join Discussion button */
+.join-discussion-btn {
+    display: inline-block;
+    background-color: #4CAF50; /* Green background for visibility */
+    color: white; /* Text color */
+    font-size: 16px; /* Font size */
+    font-weight: bold; /* Bold text */
+    padding: 12px 20px; /* Padding for a comfortable size */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+    text-align: center; /* Center the text inside the button */
+    width: 100%; /* Make the button full width */
+    margin-top: 10px; /* Space above the button */
+}
+
+/* Hover effect */
+.join-discussion-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Focus effect for accessibility */
+.join-discussion-btn:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(72, 179, 77, 0.6); /* Green focus ring */
+}
+
+
+/* Icon Animations */
+@keyframes slideInIcons {
+    0% { 
+        transform: translateX(30px);
+        opacity: 0;
+    }
+    100% { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.2); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+
+}

@@ -1,0 +1,338 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('brush\ paint\ bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    color: #333;
+    padding-top: 60px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 50px;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.back-button {
+    padding: 6px 12px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #e53e3e;
+    transform: translateY(-1px);
+}
+
+/* Art Card Styles */
+.art-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.art-card img {
+    max-height: 400px;
+    object-fit: contain;
+    width: 100%;
+}
+
+.art-info {
+    padding: 20px 0;
+}
+
+.art-info h2 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+/* Discussion Form Styles */
+.discussion-form-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.discussion-form-container h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Rating Stars Styles */
+.rating-input {
+    display: flex;
+    gap: 8px;
+    font-size: 1.4rem;
+    margin: 10px 0;
+}
+
+.rating-input i {
+    color: #ffd700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rating-input i:hover {
+    transform: scale(1.2);
+}
+
+.rating-stars {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+/* Comments Section Styles */
+.comments-container {
+    margin-top: 20px;
+}
+
+.comment {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.comment.editing {
+    border: 2px solid #2575fc;
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.comment-content {
+    margin: 10px 0;
+    color: #444;
+    line-height: 1.5;
+}
+
+.comment.editing .comment-content {
+    padding: 10px;
+    background: rgba(37, 117, 252, 0.05);
+    border-radius: 4px;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+}
+
+.btn-outline-primary, .btn-outline-danger {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-outline-primary {
+    color: #2575fc;
+    border: 1px solid #2575fc;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: #2575fc;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    background: transparent;
+}
+
+.btn-outline-danger:hover {
+    background: #dc3545;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Delete Confirmation Dialog */
+.delete-confirm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.delete-confirm .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+
+/* Toast Notification Styles */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 6px;
+    color: white;
+    display: none;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+.toast-notification.success {
+    background-color: #48bb78;
+}
+
+.toast-notification.error {
+    background-color: #f56565;
+}
+
+.toast-notification.info {
+    background-color: #4299e1;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding-top: 50px;
+    }
+
+    .art-card img {
+        max-height: 300px;
+    }
+
+    .art-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .comment-header {
+        flex-direction: column;
+    }
+
+    .rating-input {
+        font-size: 1.2rem;
+    }
+
+    .delete-confirm {
+        width: 95%;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .art-card {
+        padding: 15px;
+    }
+
+    .discussion-form-container {
+        padding: 15px;
+    }
+
+    .comment {
+        padding: 12px;
+    }
+
+    .comment-actions {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .btn-outline-primary, .btn-outline-danger {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+
+    .delete-confirm {
+        width: 85%;
+        padding: 15px;
+    }
+}

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Crafted Vision</title>
+    <!-- Preload critical assets -->
+    <link rel="preload" href="Admin.css" as="style">
+    <link rel="preload" href="ADMIN.js" as="script">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="Admin.css">
+    
+    <!-- Scripts -->
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h3><i class="fas fa-palette"></i> Crafted Vision</h3>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a class="nav-link" href="#users">
+                <i class="fas fa-users"></i> Users
+            </a>
+            <a class="nav-link" href="#artworks">
+                <i class="fas fa-paint-brush"></i> Artworks
+            </a>
+            <a class="nav-link" href="#transactions">
+                <i class="fas fa-exchange-alt"></i> Transactions
+            </a>
+            <a class="nav-link" href="#reports">
+                <i class="fas fa-chart-bar"></i> Reports
+            </a>
+            <a class="nav-link" href="#settings">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </nav>
+        <button class="btn logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="content-section active">
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <h5><i class="fas fa-users"></i> Total Users</h5>
+                        <h2 id="totalUsers">0</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <h5><i class="fas fa-paint-brush"></i> Total Artworks</h5>
+                        <h2 id="totalArtworks">0</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <h5><i class="fas fa-shopping-cart"></i> Total Sales</h5>
+                        <h2 id="totalSales">₱0</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <h5><i class="fas fa-user-clock"></i> Active Users</h5>
+                        <h2 id="activeUsers">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="chart-container">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-line"></i> Sales Analytics</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-pie"></i> Categories</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="fas fa-history"></i> Recent Activities</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Activity</th>
+                                    <th>User</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentActivities"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="usersSection" class="content-section">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5><i class="fas fa-users"></i> User Management</h5>
+                    <button class="btn btn-primary" onclick="addNewUser()">
+                        <i class="fas fa-user-plus"></i> Add New User
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="filters mb-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="userSearch" placeholder="Search users...">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="userRoleFilter">
+                                    <option value="">All Roles</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="artist">Artist</option>
+                                    <option value="customer">Customer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="userStatusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="banned">Banned</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Joined Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Artworks Section -->
+        <div id="artworksSection" class="content-section">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5><i class="fas fa-paint-brush"></i> Artwork Management</h5>
+                    <button class="btn btn-primary" onclick="addNewArtwork()">
+                        <i class="fas fa-plus"></i> Add New Artwork
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="filters mb-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="artworkSearch" placeholder="Search artworks...">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="categoryFilter">
+                                    <option value="">All Categories</option>
+                                    <option value="Painting">Painting</option>
+                                    <option value="Digital">Digital Art</option>
+                                    <option value="Photography">Photography</option>
+                                    <option value="Sculpture">Sculpture</option>
+                                    <option value="Mixed Media">Mixed Media</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="artworkStatusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="available">Available</option>
+                                    <option value="sold">Sold</option>
+                                    <option value="reserved">Reserved</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Artist</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="artworkTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Section -->
+        <div id="transactionsSection" class="content-section">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="fas fa-exchange-alt"></i> Transaction History</h5>
+                </div>
+                <div class="card-body">
+                    <div class="filters mb-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="date" class="form-control" id="transactionDateFilter">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="transactionStatusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="transactionSearch" placeholder="Search transactions...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Artwork</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reportsSection" class="content-section">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="fas fa-chart-bar"></i> Sales Reports</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <select class="form-control" id="reportType">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" id="reportStartDate">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" id="reportEndDate">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary w-100" onclick="generateReport()">
+                                <i class="fas fa-file-export"></i> Generate Report
+                            </button>
+                        </div>
+                    </div>
+                    <div id="reportContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settingsSection" class="content-section">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="fas fa-cog"></i> System Settings</h5>
+                </div>
+                <div class="card-body">
+                    <form id="settingsForm" onsubmit="saveSettings(event)">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Site Title</label>
+                                    <input type="text" class="form-control" id="siteTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Admin Email</label>
+                                    <input type="email" class="form-control" id="adminEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Currency</label>
+                                    <select class="form-control" id="currency">
+                                        <option value="PHP">PHP (₱)</option>
+                                        <option value="USD">USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Commission Rate (%)</label>
+                                    <input type="number" class="form-control" id="commissionRate" min="0" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Maximum File Size (MB)</label>
+                                    <input type="number" class="form-control" id="maxFileSize" min="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Maintenance Mode</label>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="maintenanceMode">
+                                        <label class="custom-control-label" for="maintenanceMode">Enable</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">
+                            <i class="fas fa-save"></i> Save Settings
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script defer src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script defer src="ADMIN.js"></script>
+</body>
+</html>

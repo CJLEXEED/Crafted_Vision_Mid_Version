@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Shipping Tracker and Order History</title>
+    <link rel="stylesheet" href="Transact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <button class="back-button" onclick="window.location.href='Home.html';">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </button>
+    </nav>
+
+    <div class="main-container">
+        <div id="tracking-container" class="section-container">
+            <h1><i class="fas fa-shipping-fast"></i> Track Your Shipment</h1>
+            <p>Enter your tracking number below to get the latest status.</p>
+            <div class="input-group">
+                <i class="fas fa-search"></i>
+                <input type="text" id="tracking-number" placeholder="Enter tracking number" />
+                <button onclick="trackShipment()"><i class="fas fa-search"></i> Track</button>
+            </div>
+            <div id="tracking-result" class="result-container"></div>
+            <div class="button-group">
+                <button class="forward-button" onclick="showOrderSection()">
+                    <i class="fas fa-file-alt"></i> View Order Details
+                </button>
+                <button class="cancel-button" onclick="cancelAction()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+
+        <div id="order-container" class="section-container" style="display: none;">
+            <h2><i class="fas fa-clipboard-list"></i> Order Details</h2>
+            <p>Enter the transaction number to view order details.</p>
+            <div class="input-group">
+                <i class="fas fa-receipt"></i>
+                <input type="text" id="transaction-number" placeholder="Enter transaction number" />
+                <button onclick="getOrderDetails()"><i class="fas fa-search"></i> View Details</button>
+            </div>
+            <div id="order-result" class="result-container"></div>
+            <div class="button-group">
+                <button class="forward-button" onclick="showTrackingSection()">
+                    <i class="fas fa-truck"></i> Track Shipment
+                </button>
+                <button class="cancel-button" onclick="cancelAction()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStatusIndex = 0;
+
+        function showTrackingSection() {
+            document.getElementById("tracking-container").style.display = "block";
+            document.getElementById("order-container").style.display = "none";
+            document.getElementById("tracking-result").innerHTML = '';
+        }
+
+        function showOrderSection() {
+            document.getElementById("order-container").style.display = "block";
+            document.getElementById("tracking-container").style.display = "none";
+            displayRecentTransaction();
+        }
+
+        function displayRecentTransaction() {
+            const transactionNumber = localStorage.getItem("recentTransactionNumber");
+            const orderResult = document.getElementById("order-result");
+
+            if (transactionNumber) {
+                orderResult.style.display = "block";
+                orderResult.innerHTML = `
+                    <div class="info-message">
+                        <i class="fas fa-info-circle"></i>
+                        <p><strong>Most recent transaction number: </strong>${transactionNumber}</p>
+                    </div>`;
+            } else {
+                orderResult.style.display = "block";
+                orderResult.innerHTML = `
+                    <div class="info-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>No recent transaction found.</p>
+                    </div>`;
+            }
+        }
+
+        function trackShipment() {
+            const trackingNumber = document.getElementById("tracking-number").value.trim();
+            const resultContainer = document.getElementById("tracking-result");
+
+            if (!trackingNumber) {
+                resultContainer.className = "result-container error";
+                resultContainer.style.display = "block";
+                resultContainer.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Please enter a tracking number!</p>
+                    </div>`;
+                return;
+            }
+
+            const statuses = [
+                { 
+                    status: "Pending",
+                    message: "Your shipment is being prepared.",
+                    class: "pending",
+                    icon: "fa-clock"
+                },
+                { 
+                    status: "In Transit",
+                    message: "Your shipment is on the way.",
+                    class: "transit",
+                    icon: "fa-truck-fast"
+                },
+                { 
+                    status: "Delivered",
+                    message: "Your shipment has arrived.",
+                    class: "delivered",
+                    icon: "fa-check-circle"
+                }
+            ];
+
+            const currentStatus = statuses[currentStatusIndex];
+
+            resultContainer.className = `result-container ${currentStatus.class}`;
+            resultContainer.style.display = "block";
+            resultContainer.innerHTML = `
+                <div class="status-message">
+                    <i class="fas ${currentStatus.icon}"></i>
+                    <div class="status-details">
+                        <h3>${currentStatus.status}</h3>
+                        <p>${currentStatus.message}</p>
+                        <small>Tracking Number: ${trackingNumber}</small>
+                    </div>
+                </div>`;
+
+            currentStatusIndex = (currentStatusIndex + 1) % statuses.length;
+        }
+
+        function getOrderDetails() {
+            const transactionNumber = document.getElementById("transaction-number").value.trim();
+            const orderResult = document.getElementById("order-result");
+
+            if (!transactionNumber) {
+                orderResult.style.display = "block";
+                orderResult.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Please enter a transaction number!</p>
+                    </div>`;
+                return;
+            }
+
+            const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+            const order = cartData.find(order => order.transactionNumber === transactionNumber);
+
+            if (!order) {
+                orderResult.style.display = "block";
+                orderResult.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>No order found for this transaction number.</p>
+                    </div>`;
+                return;
+            }
+
+            localStorage.setItem("recentTransactionNumber", transactionNumber);
+
+            let orderDetails = `
+                <div class="order-summary">
+                    <div class="order-header">
+                        <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                        <p class="transaction-number">Transaction #${transactionNumber}</p>
+                    </div>
+                    <div class="order-items">
+                        ${order.cart.map(item => `
+                            <div class="order-item">
+                                <img src="${item.imageSrc}" alt="${item.title}">
+                                <div class="item-details">
+                                    <h4>${item.title}</h4>
+                                    <p class="price">$${item.price}</p>
+                                    <p class="quantity">Quantity: 1</p>
+                                </div>
+                            </div>
+                        `).join("")}
+                    </div>
+                    <div class="order-history">
+                        <h3><i class="fas fa-history"></i> Order History</h3>
+                        <ul>
+                            ${order.history.map(entry => `
+                                <li><i class="fas fa-circle"></i> ${entry}</li>
+                            `).join("")}
+                        </ul>
+                    </div>
+                </div>`;
+
+            orderResult.style.display = "block";
+            orderResult.innerHTML = orderDetails;
+        }
+
+        function cancelAction() {
+            const transactionNumber = document.getElementById("transaction-number").value.trim();
+
+            if (transactionNumber) {
+                const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+                const updatedCartData = cartData.filter(order => order.transactionNumber !== transactionNumber);
+                localStorage.setItem("cartData", JSON.stringify(updatedCartData));
+
+                if (localStorage.getItem("recentTransactionNumber") === transactionNumber) {
+                    localStorage.removeItem("recentTransactionNumber");
+                }
+            }
+
+            document.getElementById("tracking-number").value = "";
+            document.getElementById("transaction-number").value = "";
+            document.getElementById("tracking-result").innerHTML = "";
+            document.getElementById("order-result").innerHTML = "";
+
+            showTrackingSection();
+        }
+
+        showTrackingSection();
+    </script>
+</body>
+</html>

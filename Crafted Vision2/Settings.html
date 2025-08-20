@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings</title>
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f4f4f9, #dfe4ea);
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #444;
+        }
+
+        .settings-group {
+            margin-bottom: 20px;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: background 0.3s ease;
+        }
+
+        .settings-header:hover {
+            background: #ececec;
+        }
+
+        .settings-header span {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .settings-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 15px;
+            border-left: 3px solid #007bff;
+        }
+
+        .settings-content.active {
+            max-height: 400px;
+            padding: 15px;
+        }
+
+        .toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle input[type="checkbox"] {
+            display: none;
+        }
+
+        .toggle-label {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background: #ccc;
+            border-radius: 50px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-label:after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="checkbox"]:checked + .toggle-label {
+            background: #4caf50;
+        }
+
+        input[type="checkbox"]:checked + .toggle-label:after {
+            transform: translateX(20px);
+        }
+
+        .input-group {
+            margin-top: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Settings</h1>
+
+        <!-- General Settings -->
+        <div class="settings-group">
+            <div class="settings-header" onclick="toggleSection(this)">
+                <span>General Settings</span>
+                <span>&#x25BC;</span>
+            </div>
+            <div class="settings-content">
+                <p>Enable dark mode:</p>
+                <div class="toggle">
+                    <input type="checkbox" id="dark-mode" onchange="toggleDarkMode()">
+                    <label for="dark-mode" class="toggle-label"></label>
+                </div>
+                <div class="input-group">
+                    <label for="font-family">Change Font Family:</label>
+                    <select id="font-family" onchange="changeFontFamily()">
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Tahoma">Tahoma</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Management -->
+        <div class="settings-group">
+            <div class="settings-header" onclick="toggleSection(this)">
+                <span>Product Management</span>
+                <span>&#x25BC;</span>
+            </div>
+            <div class="settings-content">
+                <div class="input-group">
+                    <label for="product-name">Product Name:</label>
+                    <input type="text" id="product-name" placeholder="Enter product name">
+                </div>
+                <div class="input-group">
+                    <label for="product-price">Product Price:</label>
+                    <input type="number" id="product-price" placeholder="Enter product price">
+                </div>
+                <button onclick="saveProduct()">Save Product</button>
+                <p id="product-message" style="color: green; margin-top: 10px;"></p>
+            </div>
+        </div>
+
+        <!-- Theme Customization -->
+        <div class="settings-group">
+            <div class="settings-header" onclick="toggleSection(this)">
+                <span>Theme Customization</span>
+                <span>&#x25BC;</span>
+            </div>
+            <div class="settings-content">
+                <p>Background Color:</p>
+                <input type="color" id="bg-color" onchange="changeBackgroundColor()">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+            const arrow = header.querySelector('span:last-child');
+            arrow.textContent = content.classList.contains('active') ? "\u25B2" : "\u25BC";
+        }
+
+        function toggleDarkMode() {
+            document.body.style.background = document.getElementById('dark-mode').checked 
+                ? '#333' 
+                : 'linear-gradient(to bottom, #f4f4f9, #dfe4ea)';
+            document.body.style.color = document.getElementById('dark-mode').checked ? '#fff' : '#333';
+        }
+
+        function changeFontFamily() {
+            const selectedFont = document.getElementById('font-family').value;
+            document.body.style.fontFamily = selectedFont;
+        }
+
+        function saveProduct() {
+            const productName = document.getElementById('product-name').value;
+            const productPrice = document.getElementById('product-price').value;
+
+            if (productName && productPrice) {
+                document.getElementById('product-message').textContent = `Product "${productName}" saved with price $${productPrice}.`;
+            } else {
+                document.getElementById('product-message').textContent = 'Please fill in all fields.';
+            }
+        }
+
+        function changeBackgroundColor() {
+            const color = document.getElementById('bg-color').value;
+            document.body.style.background = color;
+        }
+    </script>
+</body>
+</html>
